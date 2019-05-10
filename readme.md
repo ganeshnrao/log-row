@@ -1,6 +1,8 @@
-This module allows you to log objects into a single row.
+### A lightweight module to log objects as rows
+
 ![Example of log-row](./log-row.jpg)
 
+### Example
 ```js
 // example data to be logged
 const data = {
