@@ -1,3 +1,30 @@
+This module allows you to log objects into a single row.
+![Example of log-row](log-row.jpg "Example of using log-row")
+
+```js
+// example data to be logged
+const data = {
+  "user": {
+    "name": {
+      "first": "John",
+      "last": "Smith"
+    },
+    "email": "john.smith@log.row"
+  },
+  "order": {
+    "status": "pending",
+    "orderId": "DS5031",
+    "date": "2019-05-03"
+  }
+}
+const row = logRow(settings) // see below for settings
+console.log(row(data))
+```
+Logs the following
+```
+OrderID DS5031 | 2019-05-03 | Status pending  | Email john.smith@log.row
+```
+
 ### Installation
 
 ```bash
