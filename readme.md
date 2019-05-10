@@ -1,5 +1,5 @@
 This module allows you to log objects into a single row.
-![Example of log-row](log-row.jpg "Example of using log-row")
+![Example of log-row](./log-row.jpg)
 
 ```js
 // example data to be logged
