@@ -1,0 +1,26 @@
+{
+  "name": "log-row",
+  "version": "1.0.0",
+  "description": "Utility for logging unstructured data as rows",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc --reporter=html --reporter=text ava ./test/**/*.spec.js"
+  },
+  "keywords": [
+    "logging",
+    "column",
+    "row",
+    "table"
+  ],
+  "author": "ganeshnrao@me.com",
+  "license": "ISC",
+  "devDependencies": {
+    "ava": "^1.4.1",
+    "eslint": "^5.16.0",
+    "nyc": "^14.1.1",
+    "prettier": "^1.17.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
+  }
+}
