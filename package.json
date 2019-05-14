@@ -4,6 +4,7 @@
   "description": "Utility for logging unstructured data as rows",
   "main": "./src/index.js",
   "scripts": {
+    "lint": "eslint . --fix",
     "test": "nyc --reporter=html --reporter=text ava ./test/**/*.spec.js"
   },
   "keywords": [
@@ -17,10 +18,16 @@
   "devDependencies": {
     "ava": "^1.4.1",
     "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "nyc": "^14.1.1",
     "prettier": "^1.17.0"
   },
   "dependencies": {
     "lodash": "^4.17.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ganeshnrao/log-row.git"
   }
 }
