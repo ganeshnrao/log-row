@@ -1,6 +1,6 @@
 {
   "name": "log-row",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Utility for logging unstructured data as rows",
   "main": "./src/index.js",
   "scripts": {
