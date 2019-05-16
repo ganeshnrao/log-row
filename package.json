@@ -11,6 +11,7 @@
     "logging",
     "column",
     "row",
+    "timer",
     "table"
   ],
   "author": "ganeshnrao@me.com",
@@ -20,6 +21,7 @@
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "lolex": "^4.0.1",
     "nyc": "^14.1.1",
     "prettier": "^1.17.0"
   },

@@ -1,3 +1,7 @@
-const { getRowFormatter } = require("./units");
+const { getRowFormatter: logRow } = require("./logRow.units");
+const createTimer = require("./createTimer");
 
-module.exports = getRowFormatter;
+module.exports = {
+  logRow,
+  createTimer
+};

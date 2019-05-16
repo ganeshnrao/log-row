@@ -1,5 +1,5 @@
 const test = require("ava");
-const units = require("../src/units");
+const units = require("../src/logRow.units");
 
 test("isLeft: return true if argument is left", t => {
   t.is(units.isLeft("left"), true);
@@ -50,21 +50,20 @@ test("getFieldFunction: function for field object", t => {
   fn = units.getFieldFunction({
     ...settings,
     label: "Foo",
-    align: "right",
-    hideMissingKeys: true
+    align: "right"
   });
-  t.is(fn({ bar: 2 }), "", "hideMissingKey enabled");
+  t.is(fn({ bar: 2 }), "", "missingKeys hidden");
 
   fn = units.getFieldFunction({
     ...settings,
     label: "Foo",
     align: "right",
-    hideMissingKeys: false
+    missingKeys: "none"
   });
-  t.is(fn({ bar: 2 }), "Foo   N/A", "hideMissingKey disabled");
+  t.is(fn({ bar: 2 }), "Foo  none", "custom missingKeys value");
 
-  fn = units.getFieldFunction({ key: "foo.bar", label: "Foo" });
-  t.is(fn({ bar: 2 }), "Foo N/A", "No width specified");
+  fn = units.getFieldFunction({ key: "foo.bar", label: "Foo", missingKeys: "NA" });
+  t.is(fn({ bar: 2 }), "Foo NA", "No width specified");
 });
 
 test("getRowFormatter", t => {

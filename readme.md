@@ -2,68 +2,52 @@
 
 ![Example of log-row](./log-row.jpg)
 
-### Example
-```js
-// example data to be logged
-const data = {
-  "user": {
-    "name": {
-      "first": "John",
-      "last": "Smith"
-    },
-    "email": "john.smith@log.row"
-  },
-  "order": {
-    "status": "pending",
-    "orderId": "DS5031",
-    "date": "2019-05-03"
-  }
-}
-const row = logRow(settings) // see below for settings
-console.log(row(data))
-```
-Logs the following
-```
-OrderID DS5031 | 2019-05-03 | Status pending  | Email john.smith@log.row
-```
+This utility module exports two methods `logRow(settings)` for logging unstructured data as rows, and `createTimer(autoStart)` to capture time durations.
 
 ### Installation
 
 ```bash
 npm install log-row --save-dev
 ```
+---
+
+# `logRow(settings)`
+This method returns a function that takes one argument and formats the object based on the settings provided. See usage below.
 
 ### Usage
 ```js
-const logRow = require("log-row")
+const { logRow } = require("./index");
 
 const row = logRow({
-  hideMissingKeys: true,
+  missingKeys: 'None',
   defaultAlign: "right",
-  separator: " • ",
+  separator: "  :  ",
   columns: [
     "Foo",
-    { key: "foobar", label: "Foo", widh: 4, truncate: true },
+    { key: "foobar", label: "Foo", width: 6, truncate: true },
     { key: "animal", label: "Animal", width: 8, align: "left" },
-    { key: "fruit", label: "Fruit", width: 8 pad: "·" }
+    { key: "fruit", label: "Fruit", width: 8, pad: "·" }
   ]
-})
+});
 
-console.log(row({ animal: "Cat", fruit: "Peach" }))
-// Foo • Animal Cat      • Fruit    Peach
-
-console.log(row({ animal: "Dog", fruit: "Apple", foobar: "hello world!" }))
-// Foo • foobar rld! • Animal Dog      • Fruit    Apple
+console.log(row({ animal: "Cat", fruit: "Peach" }));
+console.log(row({ animal: "Dog", fruit: "Apple", foobar: "hello world!" }));
 ```
 
-### Settings
+The above usage will log the following.
+```
+Foo  :  Foo   None  :  Animal Cat       :  Fruit ···Peach
+Foo  :  Foo world!  :  Animal Dog       :  Fruit ···Apple
+```
+
+### `settings`
 The `logRow` method returns a function, which when called will format the object passed in as a string using the column setting provided as below. The following also shows the defaults for each property.
 
 ```js
 const row = logRow({
   separator: " | ",
-  hideMissingKeys: true, // if set then keys that don't 
-                         // exist the object will be hidden
+  missingKeys: null, // if set to string then all missing keys will be
+                     // displayed with set value
   defaultAlign: "right",
   columns: [
     "foo" // each column entry can be string or object
@@ -83,4 +67,22 @@ const row = logRow({
     // sepcify more columns here...
   ]
 })
+```
+
+# `createTimer(autoStart = true)`
+This utility measures time. The `autoStart` (defaults to `true`) determines if the timer shoould start measuring as soon as initialized. The timer can be started and stopped multiple times by calling `start` or `stop` on the object returned. The object will measure only the running time.
+
+### Example
+```js
+const { createTimer } = require("log-row");
+
+async function foo() {
+  const duration = createTimer(true); // timer started
+  await someAsyncOp(); // takes 100ms
+  duration.stop();
+  await someOtherAsyncOp(); // takes 200ms
+  duration.start();
+  await someAsyncOp(); // takes 400ms
+  console.log(`someAsyncOp took ${duration}ms`); // logs "someAsyncOp took 500ms"
+}
 ```

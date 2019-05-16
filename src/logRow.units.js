@@ -1,7 +1,7 @@
 const _ = require("lodash");
 
 const settingsDefaults = {
-  hideMissingKeys: true,
+  missingKeys: null,
   separator: " | ",
   defaultAlign: "right",
   columns: ["No columns specified"]
@@ -42,13 +42,13 @@ function getPadFn(field) {
 }
 
 function getFieldFunction(field) {
-  const { key, label, hideMissingKeys } = field;
+  const { key, label, missingKeys = null } = field;
   const truncate = getTruncateFn(field);
   const pad = getPadFn(field);
   const prefix = label === null ? "" : `${label || key} `;
   return function(obj) {
-    if (_.has(obj, key) || !hideMissingKeys) {
-      const value = _.get(obj, key, "N/A");
+    if (_.has(obj, key) || !_.isNull(missingKeys)) {
+      const value = _.get(obj, key, missingKeys);
       return `${prefix}${pad(truncate(value))}`;
     }
     return "";
@@ -56,7 +56,7 @@ function getFieldFunction(field) {
 }
 
 function getColumnFunctions(settings) {
-  const { columns, hideMissingKeys, defaultAlign } = settings;
+  const { columns, missingKeys, defaultAlign } = settings;
   return _.map(columns, field => {
     if (_.isNil(field) || _.isArray(field)) {
       throw new Error("Invalid column arguments. Must be string or object");
@@ -66,7 +66,7 @@ function getColumnFunctions(settings) {
     }
     return getFieldFunction({
       align: defaultAlign,
-      hideMissingKeys,
+      missingKeys,
       ...field
     });
   });
