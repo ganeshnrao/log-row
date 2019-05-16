@@ -16,10 +16,10 @@ This method returns a function that takes one argument and formats the object ba
 
 ### Usage
 ```js
-const { logRow } = require("./index");
+const { logRow } = require("log-row");
 
 const row = logRow({
-  missingKeys: 'None',
+  missingKeys: "None",
   defaultAlign: "right",
   separator: "  :  ",
   columns: [
