@@ -45,9 +45,22 @@ function getFieldFunction(field) {
   const { key, label, missingKeys = null } = field;
   const truncate = getTruncateFn(field);
   const pad = getPadFn(field);
+  const showMissingKeys = !_.isNull(missingKeys);
   const prefix = label === null ? "" : `${label || key} `;
+  if (_.isFunction(key)) {
+    return function(obj) {
+      const value = key(obj, field);
+      if (!_.isUndefined(value)) {
+        return `${prefix}${pad(truncate(value))}`;
+      }
+      if (showMissingKeys) {
+        return `${prefix}${pad(truncate(missingKeys))}`;
+      }
+      return "";
+    };
+  }
   return function(obj) {
-    if (_.has(obj, key) || !_.isNull(missingKeys)) {
+    if (_.has(obj, key) || showMissingKeys) {
       const value = _.get(obj, key, missingKeys);
       return `${prefix}${pad(truncate(value))}`;
     }

@@ -62,8 +62,29 @@ test("getFieldFunction: function for field object", t => {
   });
   t.is(fn({ bar: 2 }), "Foo  none", "custom missingKeys value");
 
-  fn = units.getFieldFunction({ key: "foo.bar", label: "Foo", missingKeys: "NA" });
+  fn = units.getFieldFunction({
+    key: "foo.bar",
+    label: "Foo",
+    missingKeys: "NA"
+  });
   t.is(fn({ bar: 2 }), "Foo NA", "No width specified");
+
+  const key = obj => (obj.name ? `Hello ${obj.name}!` : undefined);
+
+  fn = units.getFieldFunction({
+    key,
+    label: null,
+    missingKeys: "NA"
+  });
+  t.is(fn({ name: "FooBar" }), "Hello FooBar!", "Key set to function");
+  t.is(fn({}), "NA", "Key set to function, missing key");
+
+  fn = units.getFieldFunction({
+    key,
+    label: null,
+    missingKeys: null
+  });
+  t.is(fn({}), "", "Key set to function, no missing key");
 });
 
 test("getRowFormatter", t => {
